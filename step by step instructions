@@ -1,0 +1,52 @@
+Follow the steps here for vault installation:
+https://developer.hashicorp.com/vault/docs/install/install-binary
+
+Read the documentation for vault architecture
+https://developer.hashicorp.com/vault/docs/internals/architecture
+
+Setting up Vault Dev mode:
+vault server -dev -dev-root-token-id="root"
+
+Setting up Vault in production mode:
+vault server -config ./vault-config.hcl
+
+export VAULT_ADDR=http://localhost:8200
+
+vault status
+
+vault operator init -key-shares=1 -key-threshold=1
+
+export VAULT_TOKEN=<root_token>
+
+vault operator unseal
+
+vault audit enable file file_path=./logs/vault_audit.log
+
+tail -f ./logs/vault_audit.log
+
+Access UI: 
+http://localhost:8200/
+Use Root token to login
+
+CLI commands:
+
+vault kv -h
+
+vault kv put -h
+
+Create the KV engine from UI with path secret & kv.
+
+vault kv put -mount=secret foo bar=baz
+vault kv put -mount=kv new flower=jasmine
+vault kv put -mount=secret foo bar=baz hello=world
+vault kv put -mount=secret foo bar=baz hello=world fruit=apple
+
+vault kv list secret
+
+vault kv get -mount=secret foo
+
+vault kv delete -mount=secret foo
+
+vault kv undelete -versions=3 -mount=secret foo
+
+vault kv get -mount=secret -version=2 foo
